@@ -1,0 +1,37 @@
+.items-start-animation {
+    animation: slideFromLeft 1s ease-out 1s forwards;
+    visibility: hidden;
+  }
+  
+  .items-end-animation {
+    animation: slideFromRight 1s ease-out 2s forwards;
+    visibility: hidden;
+  }
+  
+  @keyframes slideFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  @keyframes slideFromRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .img-container:hover img {
+    transform: translateX(-20px);
+  }

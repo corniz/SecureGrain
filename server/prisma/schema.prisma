@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String        @unique
+  hash        String
+  role        Roles         @default(Client)
+  phoneNumber String
+  Reservation Reservation[]
+  warehouseId Int?          @map("warehouse_id")
+  warehouse   Warehouse?    @relation(fields: [warehouseId], references: [id])
+
+  @@map("users")
+}
+
+model Warehouse {
+  id      Int    @id @default(autoincrement())
+  code    String @unique
+  city    String
+  address String
+
+  sectors Sector[]
+  user User[]
+
+  @@map("warehouses")
+}
+
+model Sector {
+  id          Int     @id @default(autoincrement())
+  code        String  @unique
+  taken_space Int     @default(0)
+  max_space   Int
+  day_price   Float
+  is_working  Boolean @default(false)
+
+  warehouseId Int?          @map("warehouse_id")
+  warehouse   Warehouse?    @relation(fields: [warehouseId], references: [id])
+  Reservation Reservation[]
+  LoadingTime LoadingTime[]
+
+  @@map("sectors")
+}
+
+model Reservation {
+  id               String            @id @default(cuid())
+  reservation_code String            @unique @default(uuid())
+  state            ReservationStatus @default(WAITING)
+  start_date       DateTime
+  end_date         DateTime
+  document_url     String?
+  invoice_url      String?
+
+  userId Int  @map("user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  sectorId Int?    @map("sector_id")
+  sector   Sector? @relation(fields: [sectorId], references: [id])
+
+  @@map("reservations")
+}
+
+model LoadingTime {
+  id        Int      @id @default(autoincrement())
+  date      String
+  time      Int
+  type      String
+  sectorId  Int      @map("sector_id")
+  sector    Sector   @relation(fields: [sectorId], references: [id])
+
+  @@map("loading_times")
+}
+
+enum ReservationStatus {
+  CANCELLED
+  DENIED
+  WAITING
+  CONFIRMED
+  IN_USE
+}
+
+enum Roles {
+  Client
+  Manager
+  Admin
+}
