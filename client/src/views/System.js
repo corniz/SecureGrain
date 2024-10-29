@@ -17,7 +17,7 @@ export default () => {
                             </div>
                         </Link>
                     </div>
-                    {/*<div className="font-font-sans-apple-color-emoji text-center text-customGreen text-2xl ml-2">
+                    <div className="font-font-sans-apple-color-emoji text-center text-customGreen text-2xl ml-2">
                         <Link to="/sectors">
                             <div className="h-full w-full rounded-xl mt-3 text-center pt-5 pb-5 bg-gray-50 border border-solid border-customGreen hover:bg-gray-100">
                                 <p>View all sectors</p>
@@ -37,7 +37,7 @@ export default () => {
                                 <p>View all loading times</p>
                             </div>
                         </Link>
-                    </div>*/}
+                    </div>
                 </div>
             </div>
         </div>
