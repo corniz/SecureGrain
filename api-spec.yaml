@@ -1,0 +1,312 @@
+openapi: 3.0.0
+info:
+  title: Kornelijus Juška
+  description: >-
+    # ⛓️ 1 laboratorinis - API sąsaja.
+    Ši API sąsaja leidžia atlikti įvairias operacijas su sandėliais, sektoriais, rezervacijomis ir vartotojais. Naudojant šias API užklausas, galima gauti informaciją apie sandėlius, sektorius, rezervacijas ir vartotojus, taip pat kurti, atnaujinti ir ištrinti šiuos įrašus.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3333
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+paths:
+  /storages/all:
+    get:
+      tags:
+        - default
+      summary: Saitynams StorageALL http://localhost:3333/storages/all
+      description: "Gauti visus sandėlius"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /sectors/get/all:
+    get:
+      tags:
+        - default
+      summary: Saitynams SectorALL http://localhost:3333/sectors/get/all
+      description: "Gauti visus sektorius"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /reservations/my:
+    get:
+      tags:
+        - default
+      summary: Saitynams RezervacijosALL http://localhost:3333/reservations/my
+      description: "Gauti visas rezervacijas"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /loadingtimes/all:
+    get:
+      tags:
+        - default
+      summary: Saitynams LoadingTimesALL
+      description: "Gauti visus pakrovimo laikus"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /user/all:
+    get:
+      tags:
+        - default
+      summary: Saitynams VartotojaiALL http://localhost:3333/user/all
+      description: "Gauti visus vartotojus"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /storages/create:
+    post:
+      tags:
+        - default
+      summary: Saitynams StorageCreate
+      description: "Sukurti sandėlį"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                storageCity:
+                  type: string
+                  example: Vilnius
+                storageAddress:
+                  type: string
+                  example: Partizanu g. 11
+      responses:
+        '201':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /sectors/create:
+    post:
+      tags:
+        - default
+      summary: Saitynams SectorCreate
+      description: "Sukurti sektorių"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                maxSpace:
+                  type: integer
+                  example: 5002
+                sectorPrice:
+                  type: number
+                  example: 152
+      responses:
+        '201':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /reservations/create2:
+    post:
+      tags:
+        - default
+      summary: Saitynams RezervacijosCreate
+      description: "Sukurti rezervaciją"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userid:
+                  type: integer
+                  example: 10
+                sectorId:
+                  type: integer
+                  example: 1
+                startDate:
+                  type: string
+                  format: date
+                  example: '2024-10-01'
+                endDate:
+                  type: string
+                  format: date
+                  example: '2024-10-02'
+      responses:
+        '201':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /loadingtimes/create:
+    post:
+      tags:
+        - default
+      summary: Saitynams LoadingTimesCreate
+      description: "Sukurti pakrovimo laikus"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: '2024-09-25'
+                time:
+                  type: string
+                  example: '10:00'
+                type:
+                  type: string
+                  example: import
+                sectorId:
+                  type: integer
+                  example: 2
+                sector:
+                  type: object
+                  properties:
+                    connect:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+      responses:
+        '201':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /auth/signup:
+    post:
+      tags:
+        - default
+      summary: Saitynams VartotojaiCreate
+      description: "Sukurti vartotoją"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: PostmanTestine1
+                lastName:
+                  type: string
+                  example: Paskyra123
+                email:
+                  type: string
+                  example: PostmanTestinePaskyra1@gmail.com
+                password:
+                  type: string
+                  example: PostmanTestinePaskyra123
+                rePassword:
+                  type: string
+                  example: PostmanTestinePaskyra123
+                phoneNumber:
+                  type: string
+                  example: '1234567890'
+      responses:
+        '201':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /storages/update/2:
+    post:
+      tags:
+        - default
+      summary: Saitynams StorageUPDATE
+      description: "Pakeisti sandėlį"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                storageCity:
+                  type: string
+                  example: Kaunas
+                storageAddress:
+                  type: string
+                  example: Partizanu g. 18
+      responses:
+        '201':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /user/update/1:
+    patch:
+      tags:
+        - default
+      summary: Saitynams VartotojaiUPDATE
+      description: "Pakeisti vartotoją"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: PostmanTestine
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /storages/delete/4:
+    delete:
+      tags:
+        - default
+      summary: Saitynams StorageDelete
+      description: "Ištrinti sandėlį"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /sectors/delete/2:
+    delete:
+      tags:
+        - default
+      summary: Saitynams SectorDelete
+      description: "Ištrinti sektorių"
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
+  /user/delete/1:
+    delete:
+      tags:
+        - default
+      summary: Saitynams VartotojaiDelete
+      description: "Ištrinti vartotoją"
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Sėkmingas atsakymas
+          content:
+            application/json: {}
